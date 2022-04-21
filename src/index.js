@@ -3,17 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
-
-    constructor(props) {
-        super(props) // porque extiende de React.Component
-        // Un estado en React es, un almacén de datos mutable
-        // de componentes y que además son autónomos. 
-        // O sea, el estado pertenece una clase autónoma que cualquiera pueda
-        // importar y usar en su aplicación.  
-        this.state = {
-            value: null, // al crearse, el estado no tiene ningun valor.
-        };
-    }
+    // ahora queremos pasar el estado al board para que las operaciones sean mas faciles.
     render() {
         return (
             <button
@@ -34,6 +24,13 @@ class Board extends React.Component {
             squares: Array(9).fill(null), // squares es una prop del estado que tiene un array con 9 pos. vacias. 
         }
     }
+
+    handleClick(i){
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({squares: squares});
+    }
+
     renderSquare(i) {
         // recibimos un param con un num
         // todos los componentes Square tienen una prop llamada value, seteada por el param.
