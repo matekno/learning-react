@@ -4,8 +4,7 @@ import './index.css';
 
 class Square extends React.Component {
 
-    constructor(props){
-        // un componente puede tener constructores parametrizados
+    constructor(props) {
         super(props) // porque extiende de React.Component
         // Un estado en React es, un almacén de datos mutable
         // de componentes y que además son autónomos. 
@@ -17,8 +16,11 @@ class Square extends React.Component {
     }
     render() {
         return (
-            // cada vez que cualquier boton es tocado, consolelogea click.
-            <button className="square" onClick={()=> console.log('click')}>
+            <button
+                className="square"
+                onClick={() => this.props.onClick()} // con setState cambiamos el estado
+            >
+                {/* ahora que tenemos estado, podemos remplazar el .props por .state*/}
                 {this.props.value}
             </button>
         );
@@ -26,11 +28,20 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null), // squares es una prop del estado que tiene un array con 9 pos. vacias. 
+        }
+    }
     renderSquare(i) {
         // recibimos un param con un num
         // todos los componentes Square tienen una prop llamada value, seteada por el param.
 
-        return <Square value={i} />;
+        return <Square
+            value={this.state.squares[i]}
+            onClick={() => this.handleClick(i)}
+        />;
     }
 
     render() {
